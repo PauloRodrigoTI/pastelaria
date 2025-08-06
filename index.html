@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pastelaria da Tania</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="logo-nome">
+      <img src="imagens/logo.png" alt="Logo" class="logo" />
+      <h1 class="titulo">Pastelaria da Tania</h1>
+    </div>
+  </header>
+
+  <div class="container" id="produtos">
+    <!-- Produtos inseridos pelo script.js -->
+  </div>
+
+  <div id="opcoes">
+    <h3>Entrega e Pagamento</h3>
+
+    <div class="grupo-opcao">
+      <label>Forma de Entrega:</label><br />
+      <label><input type="radio" name="entrega" value="Retirar no local" checked> Retirar no local</label><br />
+      <label><input type="radio" name="entrega" value="Delivery"> Delivery (R$ 3,00) </label>
+    </div>
+
+    <div id="campo-endereco" style="display: none;">
+      <label>Endereço para entrega:</label><br />
+      <input type="text" id="endereco" placeholder="Rua, número, bairro" />
+    </div>
+
+    <div class="grupo-opcao">
+      <label>Forma de Pagamento:</label><br />
+      <label><input type="radio" name="pagamento" value="Dinheiro" checked> Dinheiro</label><br /> 
+      <label><input type="radio" name="pagamento" value="Pix"> Pix</label><br />
+      <label><input type="radio" name="pagamento" value="Cartão"> Cartão</label>
+    </div>
+  </div>
+
+    <!-- Resumo fixo do carrinho -->
+  <div id="resumo-carrinho">
+    <p>Total: <span id="total-resumo">R$ 0,00</span></p>
+    <p>Itens: <span id="qtd-itens">0</span></p>
+    <button onclick="mostrarCarrinho()">Ver meus pedidos</button>
+  </div>
+
+  <!-- Carrinho detalhado (escondido por padrão) -->
+  <div id="carrinho" style="display: none;">
+    <h3>Carrinho:</h3>
+    <ul id="itens-carrinho"></ul>
+    <p>Total: <span id="total">R$ 0,00</span></p>
+    <button onclick="fecharCarrinho()">Fechar</button>
+  </div>
+
+  <footer>
+    Site criado por [PR] • © 2025
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,16 +1,18 @@
 // Lista de produtos disponíveis
 const produtos = [
   { nome: "Pastel", preco: 7.00, imagem: "imagens/pastel.jpg", disponivel: 50 },
-  { nome: "Coxinha", preco: 2.00, imagem: "imagens/coxinha.jpg", disponivel: 15 },
-  { nome: "Bolo (fatia)", preco: 4.00, imagem: "imagens/bolo.jpg", disponivel: 8 },
-  { nome: "Pão de Pizza", preco: 5.00, imagem: "imagens/pizza.jpg", disponivel: 10 },
-  { nome: "Refrigerante", preco: 3.00, imagem: "imagens/refri.jpg", disponivel: 5 },
   { nome: "Cachorro-quente", preco: 6.00, imagem: "imagens/hotdog.jpg", disponivel: 20 },
+  { nome: "Coxinha (frango)", preco: 2.00, imagem: "imagens/coxinha.jpg", disponivel: 15 },
+  { nome: "Bolo vulcão (fatia)", preco: 4.00, imagem: "imagens/bolo.jpg", disponivel: 8 },
+  { nome: "Pão de Pizza (frango)", preco: 5.00, imagem: "imagens/pizza.jpg", disponivel: 10 },
+  { nome: "Refrigerante", preco: 3.00, imagem: "imagens/refri.jpg", disponivel: 5 },
   { nome: "Morango do Amor", preco: 8.00, imagem: "imagens/morango.jpg", disponivel: 4 },
 ];
 
 const saboresPastel = ["Frango", "Carne-moida", "Queijo", "Calabresa", "Presunto"];
 const complementosPastel = ["Cebola", "Tomate", "Milho", "Ketchup", "Mostarda", "Maionese"];
+const complementosHotDog = ["Mostarda", "Ketchup", "Maionese", "Batata Palha", "Cebola", "Tomate", "Purê", "Milho"];
+const chavePix = "81993391132";
 
 let total = 0;
 const itensCarrinho = [];
@@ -23,6 +25,7 @@ produtos.forEach((prod, index) => {
 
   let saboresHTML = "";
   let complementosHTML = "";
+  let complementosHotDogHTML = "";
 
   if (prod.nome === "Pastel") {
     saboresHTML = `
@@ -43,6 +46,17 @@ produtos.forEach((prod, index) => {
     `;
   }
 
+  if (prod.nome === "Cachorro-quente") {
+    complementosHotDogHTML = `
+      <div class="complementos">
+        <p><strong>Complementos:</strong></p>
+        ${complementosHotDog.map(comp =>
+          `<label><input type="checkbox" name="comp-hotdog-${index}" value="${comp}"> ${comp}</label><br>`
+        ).join("")}
+      </div>
+    `;
+  } 
+
   card.innerHTML = `
     <img src="${prod.imagem}" alt="${prod.nome}" />
     <h3>${prod.nome}</h3>
@@ -50,6 +64,7 @@ produtos.forEach((prod, index) => {
     <p>Disponível: <span id="disp-${index}">${prod.disponivel}</span></p>
     ${saboresHTML}
     ${complementosHTML}
+    ${complementosHotDogHTML}
     <button onclick='adicionarProdutoComSabores(${index})'>Adicionar</button>
   `;
 
@@ -92,6 +107,17 @@ function adicionarProdutoComSabores(index) {
     }
 
     saboresSelecionados.forEach(cb => cb.checked = false);
+    complementosSelecionados.forEach(cb => cb.checked = false);
+  }
+
+  if (produto.nome === "Cachorro-quente") {
+    const complementosSelecionados = document.querySelectorAll(`input[name="comp-hotdog-${index}"]:checked`);
+    const complementos = Array.from(complementosSelecionados).map(i => i.value);
+  
+    if (complementos.length > 0) { 
+      nomeFinal += ` [${complementos.join(", ")}]`;
+    }
+    
     complementosSelecionados.forEach(cb => cb.checked = false);
   }
 
@@ -207,21 +233,39 @@ function finalizarPedido() {
   }
 
   const lista = itensCarrinho.map(item =>
-    `• ${item.nome} x${item.quantidade} = R$ ${(item.preco * item.quantidade).toFixed(2)}`
+    `• ${item.nome} x${item.quantidade} = R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}`
   ).join("%0A");
 
-  const totalTexto = document.getElementById("total").innerText;
+  let subtotal = itensCarrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
+  let entrega = 0;
 
-  const entrega = document.querySelector('input[name="entrega"]:checked')?.value || "Não informado";
-  const pagamento = document.querySelector('input[name="pagamento"]:checked')?.value || "Não informado";
-  const endereco = entrega === "Delivery" ? document.getElementById("endereco").value.trim() : "";
+  const tipoEntrega = document.querySelector('input[name="entrega"]:checked')?.value || "Não informado";
+  const formaPagamento = document.querySelector('input[name="pagamento"]:checked')?.value || "Não informado";
+  const endereco = tipoEntrega === "Delivery" ? document.getElementById("endereco").value.trim() : "";
 
-  const mensagem = `Olá! Gostaria de fazer um pedido:%0A%0A${lista}%0A%0ATotal: ${totalTexto}%0AEntrega: ${entrega}${endereco ? " - " + endereco : ""}%0APagamento: ${pagamento}`;
+  if (tipoEntrega === "Delivery") {
+    entrega = 3;
+  }
 
-  const numero = "5581993826753"; // seu número
+  const total = subtotal + entrega;
+  const chavePix = "81993381132";
+
+  // Mensagem principal
+  let mensagem = `Olá! Gostaria de fazer um pedido:%0A%0A${lista}` +
+                 `%0A%0ASubtotal: R$ ${subtotal.toFixed(2).replace('.', ',')}` +
+                 `%0AEntrega: R$ ${entrega.toFixed(2).replace('.', ',')}` +
+                 `%0ATotal: R$ ${total.toFixed(2).replace('.', ',')}` +
+                 `%0A%0AEntrega: ${tipoEntrega}${endereco ? " - " + endereco : ""}` +
+                 `%0APagamento: ${formaPagamento}`;
+
+  // Adiciona chave Pix só se a forma for Pix
+  if (formaPagamento.toLowerCase() === "pix") {
+    mensagem += `%0A%0AChave Pix: ${chavePix}`;
+  }
+
+  const numero = "5581993391132"; // Substitua pelo seu número
   window.open(`https://wa.me/${numero}?text=${mensagem}`, "_blank");
 }
-
 
 document.querySelectorAll('input[name="entrega"]').forEach(input => {
   input.addEventListener('change', () => {

@@ -70,15 +70,6 @@ header {
 }
 
 .card button {
-  background: #f77f00;
-  transition: background 0.3s;
-}
-
-.card button:hover {
-  background: #d65a00;
-}
-
-.card button {
   padding: 10px;
   background: #003049;
   color: white;
@@ -86,10 +77,19 @@ header {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
+  font-weight: bold;
+  transition: transform 0.1s ease, background-color 0.2s;
 }
 
+/* Efeito ao passar o mouse */
 .card button:hover {
-  background: #264653;
+  background-color: #264653;
+  transform: scale(1.05);
+}
+
+/* Efeito ao clicar */
+.card button:active {
+  transform: scale(0.95);
 }
 
 footer {
@@ -132,6 +132,16 @@ footer {
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  transition: transform 0.1s ease, background-color 0.2s;
+}
+
+.remover-btn:hover {
+  background-color: #c92d3e;
+  transform: scale(1.05);
+}
+
+.remover-btn:active {
+  transform: scale(0.9);
 }
 
 .finalizar {
@@ -174,10 +184,16 @@ footer {
   padding: 10px 16px;
   border-radius: 5px;
   cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s;
 }
 
 #finalizar:hover {
   background: #05c191;
+  transform: scale(1.05);
+}
+
+#finalizar:active {
+  transform: scale(0.95);
 }
 
 .sabores-complementos {
@@ -229,10 +245,16 @@ footer {
   color: white;
   border-radius: 4px;
   cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s;
 }
 
 #itens-carrinho button:hover {
   background-color: #d48c00;
+  transform: scale(1.1);
+}
+
+#itens-carrinho button:active {
+  transform: scale(0.9);
 }
 
 #opcoes {
@@ -296,4 +318,34 @@ footer {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  transition: transform 0.1s ease, background-color 0.2s;
+}
+
+#resumo-carrinho button:hover {
+  background-color: #e6b800;
+  transform: scale(1.05);
+}
+
+#resumo-carrinho button:active {
+  transform: scale(0.95);
+}
+
+#fechar-carrinho {
+  background-color: #3b3b3b;
+  color: #ffffff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.1s ease, background-color 0.2s;
+}
+
+#fechar-carrinho:hover {
+  background-color: #131313;
+  transform: scale(1.05);
+}
+
+#fechar-carrinho:active {
+  transform: scale(0.95);
 }

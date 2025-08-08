@@ -2,7 +2,7 @@
 const produtosPadrao = [
   { nome: "Pastel", preco: 7.00, imagem: "imagens/pastel.jpg", disponivel: 40 },
   { nome: "Cachorro-quente", preco: 6.00, imagem: "imagens/hotdog.jpg", disponivel: 15 },
-  { nome: "Coxinha (frango)", preco: 2.00, imagem: "imagens/coxinha.jpg", disponivel: 12 },
+  { nome: "Coxinha (frango)", preco: 2.00, imagem: "imagens/coxinha.jpg", disponivel: 14 },
   { nome: "Bolo vulcão (fatia)", preco: 4.00, imagem: "imagens/bolo.jpg", disponivel: 8 },
   { nome: "Pão de Pizza (frango)", preco: 5.00, imagem: "imagens/pizza.jpg", disponivel: 0 },
   { nome: "Refrigerante", preco: 3.00, imagem: "imagens/refri.jpg", disponivel: 5 },

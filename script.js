@@ -1,5 +1,5 @@
 // Lista de produtos disponíveis
-const produtos = [
+const produtosPadrao = [
   { nome: "Pastel", preco: 7.00, imagem: "imagens/pastel.jpg", disponivel: 40 },
   { nome: "Cachorro-quente", preco: 6.00, imagem: "imagens/hotdog.jpg", disponivel: 15 },
   { nome: "Coxinha (frango)", preco: 2.00, imagem: "imagens/coxinha.jpg", disponivel: 12 },
@@ -8,6 +8,8 @@ const produtos = [
   { nome: "Refrigerante", preco: 3.00, imagem: "imagens/refri.jpg", disponivel: 5 },
   { nome: "Morango do Amor", preco: 8.00, imagem: "imagens/morango.jpg", disponivel: 0 },
 ];
+
+let produtos = JSON.parse(localStorage.getItem('produtosDisponiveis')) || produtosPadrao;
 
 const saboresPastel = ["Frango", "Carne-moida", "Queijo", "Calabresa", "Presunto"];
 const complementosPastel = ["Cebola", "Tomate", "Milho", "Ketchup", "Mostarda", "Maionese"];
@@ -79,6 +81,10 @@ function limitarSabores(name) {
   }
 }
 
+function salvarDisponibilidade() {
+  localStorage.setItem('produtosDisponiveis', JSON.stringify(produtos));
+}
+
 function adicionarProdutoComSabores(index) {
   const produto = produtos[index];
 
@@ -137,6 +143,7 @@ function adicionarProdutoComSabores(index) {
   total += produto.preco;
 
   atualizarDisponivel(index);
+  salvarDisponibilidade();
   atualizarCarrinho();
   atualizarResumoCarrinho();
 }
@@ -191,6 +198,7 @@ function incrementar(index) {
   total += item.preco;
 
   atualizarDisponivel(item.idProduto);
+  salvarDisponibilidade();
   atualizarCarrinho();
   atualizarResumoCarrinho();
 }
@@ -204,6 +212,7 @@ function decrementar(index) {
     produto.disponivel++;
     total -= item.preco;
     atualizarDisponivel(item.idProduto);
+    salvarDisponibilidade();
   } else {
     removerProduto(index);
     return;
@@ -222,6 +231,7 @@ function removerProduto(index) {
 
   itensCarrinho.splice(index, 1);
   atualizarDisponivel(item.idProduto);
+  salvarDisponibilidade();
   atualizarCarrinho();
   atualizarResumoCarrinho();
 }
@@ -298,4 +308,5 @@ function fecharCarrinho() {
 
 atualizarCarrinho();
 atualizarResumoCarrinho();
+
 

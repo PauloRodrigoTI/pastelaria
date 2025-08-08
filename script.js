@@ -258,7 +258,7 @@ function finalizarPedido() {
   }
 
   const total = subtotal + entrega;
-  const chavePix = "81993381132";
+  const chavePix = "81993391132";
 
   // Mensagem principal
   let mensagem = `Olá! Gostaria de fazer um pedido:%0A%0A${lista}` +
